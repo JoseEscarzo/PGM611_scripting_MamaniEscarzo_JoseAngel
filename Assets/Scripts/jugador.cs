@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class jugador : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class jugador : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private Animator animator;
+    private int cantAbejas = 0;
+
+    public TMP_Text textoAbejas;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -34,6 +39,15 @@ public class jugador : MonoBehaviour
     public void FixedUpdate()
     {
         esPiso = Physics2D.OverlapCircle(comprobadorPiso.position, radioComprobadorPiso, layerPiso);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.transform.CompareTag("abejita"))
+        {
+            Destroy(collision.gameObject);
+            cantAbejas++;
+            textoAbejas.text = "" + cantAbejas;
+        }
     }
 }
 

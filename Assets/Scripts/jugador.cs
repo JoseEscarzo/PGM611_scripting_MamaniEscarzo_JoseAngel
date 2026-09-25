@@ -10,10 +10,13 @@ public class jugador : MonoBehaviour
     public Transform comprobadorPiso;
     public float radioComprobadorPiso = 0.1f;
     public LayerMask layerPiso;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Animator animator;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -24,6 +27,8 @@ public class jugador : MonoBehaviour
         if (movimiento != 0) transform.localScale = new Vector3(Mathf.Sign(movimiento), 1, 1);
         if (Input.GetButtonDown("Jump") && esPiso)
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, alturaSalto);
+        animator.SetFloat("Velocidad", Mathf.Abs(movimiento));
+        animator.SetFloat("VelocidadVertical", rb.linearVelocity.y);
     }
     public void FixedUpdate()
     {
